@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace AoC2022
+namespace AoC.Shared
 {
     /// <summary>
     /// Extension methods that are used in the solutions for AoC2022.

@@ -1,3 +1,4 @@
+using AoC.Shared;
 using System;
 namespace AoC2022
 {
@@ -6,11 +7,9 @@ namespace AoC2022
         private const int _lowerCaseA = 97;
         private const int _upperCaseA = 65;
 
-        public Day3(int day, bool isTest)
-            : base(day, isTest) { }
+        public Day3(int day, int year, bool isTest) : base(day, year,isTest) { }
 
-        public Day3(int day)
-            : base(day) { }
+        public Day3(int day, int year) : base(day, year) { }
 
         public override object SolvePart1() => ReorganizeRucksack();
 

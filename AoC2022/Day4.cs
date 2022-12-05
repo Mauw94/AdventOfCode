@@ -1,13 +1,12 @@
+using AoC.Shared;
 using System;
 namespace AoC2022
 {
     public class Day4 : BaseDay
     {
-        public Day4(int day, bool isTest)
-            : base(day, isTest) { }
+        public Day4(int day, int year, bool isTest) : base(day, year, isTest) { }
 
-        public Day4(int day)
-            : base(day) { }
+        public Day4(int day, int year) : base(day, year) { }
 
         public override object SolvePart1()
         {

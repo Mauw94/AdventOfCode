@@ -1,21 +1,20 @@
-﻿using System;
-namespace AoC2022
+﻿namespace AoC.Shared
 {
     public abstract class BaseDay
     {
         public int DayNr { get; set; }
         protected List<string> FileContent { get; set; } = new();
 
-        public BaseDay(int day, bool isTest)
+        public BaseDay(int day, int year, bool isTest)
         {
             DayNr = day;
-            FileContent = Common.GetInput(day, isTest);
+            FileContent = Common.GetInput(day, year, isTest);
         }
 
-        public BaseDay(int day)
+        public BaseDay(int day, int year)
         {
             DayNr = day;
-            FileContent = Common.GetInput(day, true);
+            FileContent = Common.GetInput(day, year, true);
         }
 
         public abstract object SolvePart1();

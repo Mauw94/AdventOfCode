@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace AoC2022
+namespace AoC.Shared
 {
     public static class Common
     {
@@ -9,15 +9,15 @@ namespace AoC2022
         /// <summary>
         /// Read the input file (test or prod) to solve the problems with.
         /// </summary>
-        public static List<string> GetInput(int day, bool isTest)
+        public static List<string> GetInput(int day, int year, bool isTest)
         {
             var inputPath = string.Empty;
             var fileName = isTest ? $"day{day}_test.txt" : $"day{day}.txt";
 
             if (OperatingSystem.IsMacOS())
-                inputPath = "/Users/mauritsseelen/Documents/Projects/AdventOfCode/AoC2022/Input/";
+                inputPath = "/Users/mauritsseelen/Documents/Projects/AdventOfCode/AoC.Shared/Input/" + year + "/";
             else if (OperatingSystem.IsWindows())
-                inputPath = "C:/Projects/AdventOfCode/AoC2022/Input/";
+                inputPath = "C:/Projects/AdventOfCode/AoC.Shared/Input/" + year + "/";
             else
                 throw new Exception("OS linux or others not implemented for file reading yet.");
 

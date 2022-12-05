@@ -1,4 +1,4 @@
-using System;
+using AoC.Shared;
 namespace AoC2022
 {
     public enum WinDrawLose
@@ -17,11 +17,9 @@ namespace AoC2022
 
     public class Day2 : BaseDay
     {
-        public Day2(int day, bool isTest)
-            : base(day, isTest) { }
+        public Day2(int day, int year, bool isTest) : base(day, year, isTest) { }
 
-        public Day2(int day)
-            : base(day) { }
+        public Day2(int day, int year) : base(day, year) { }
 
         public override object SolvePart1()
         {

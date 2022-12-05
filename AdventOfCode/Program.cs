@@ -1,30 +1,43 @@
-﻿using AoC2022;
+﻿using AoC.Shared;
+using AoC2022;
 
-Console.WriteLine("Welcome to Advent of Code 2022!");
-List<BaseDay> days = new()
+
+List<BaseDay> days2020 = new()
 {
-    new Day1(1, false),
-    new Day2(2, false),
-    new Day3(3, false),
-    new Day4(4, false),
-    new Day5(5, false),
+    new Day1(1, 2020, false)
 };
 
-foreach (var day in days)
+List<BaseDay> days2022 = new()
 {
-    Console.WriteLine("Day{0}", day.DayNr);
+    new Day1(1, 2022, false),
+    new Day2(2, 2022, false),
+    new Day3(3, 2022, false),
+    new Day4(4, 2022, false),
+    new Day5(5, 2022, false),
+};
 
-    Common.StartTimeExecution();
-    Console.WriteLine("\tSolution part1: {0}", day.SolvePart1());
-    Common.StopTimeExecution();
-    Console.Write($"\tExecuted in {Common.TimeExecutionElapsed()} ms");
+Run(days2020, 2020);
+Run(days2022, 2022);
 
-    Console.WriteLine("\n");
+static void Run(List<BaseDay> days, int year)
+{
+    Console.WriteLine($"\nWelcome to Advent of Code {year}!\n\n");
+    foreach (var day in days)
+    {
+        Console.WriteLine("Day{0}", day.DayNr);
 
-    Common.StartTimeExecution();
-    Console.WriteLine("\tSolution part2: {0}", day.SolvePart2());
-    Common.StopTimeExecution();
-    Console.Write($"\tExecuted in {Common.TimeExecutionElapsed()} ms");
+        Common.StartTimeExecution();
+        Console.WriteLine("\tSolution part1: {0}", day.SolvePart1());
+        Common.StopTimeExecution();
+        Console.Write($"\tExecuted in {Common.TimeExecutionElapsed()} ms");
 
-    Console.WriteLine("\n");
+        Console.WriteLine("\n");
+
+        Common.StartTimeExecution();
+        Console.WriteLine("\tSolution part2: {0}", day.SolvePart2());
+        Common.StopTimeExecution();
+        Console.Write($"\tExecuted in {Common.TimeExecutionElapsed()} ms");
+
+        Console.WriteLine("\n");
+    }
 }
