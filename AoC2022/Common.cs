@@ -15,9 +15,9 @@ namespace AoC2022
             var fileName = isTest ? $"day{day}_test.txt" : $"day{day}.txt";
 
             if (OperatingSystem.IsMacOS())
-                inputPath = "/Users/mauritsseelen/Projects/AoC2022/AoC2022/Input/";
+                inputPath = "/Users/mauritsseelen/Documents/Projects/AdventOfCode/AoC2022/Input/";
             else if (OperatingSystem.IsWindows())
-                inputPath = "C:/Projects/AoC2022/AoC2022/Input/";
+                inputPath = "C:/Projects/AdventOfCode/AoC2022/Input/";
             else
                 throw new Exception("OS linux or others not implemented for file reading yet.");
 
