@@ -2,7 +2,8 @@
 
 List<BaseDay> days2020 = new()
 {
-    new AoC2020.Day1(1, 2020, false)
+    new AoC2020.Day1(1, 2020, false),
+    new AoC2020.Day2(2, 2020, false),
 };
 
 List<BaseDay> days2022 = new()

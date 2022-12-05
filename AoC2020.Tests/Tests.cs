@@ -17,5 +17,20 @@ namespace AoC2020.Tests
             Assert.AreEqual(514579, sol1);
             Assert.AreEqual(241861950, sol2);
         }
+
+        [TestMethod]
+        public void Day2()
+        {
+            // arrange
+            var day2 = new Day2(2, 2020);
+
+            // act
+            var sol1 = day2.SolvePart1();
+            var sol2 = day2.SolvePart2();
+
+            // assert
+            Assert.AreEqual(2, sol1);
+            Assert.AreEqual(1, sol2);
+        }
     }
 }
