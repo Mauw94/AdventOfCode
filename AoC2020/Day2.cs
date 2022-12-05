@@ -77,11 +77,11 @@ namespace AoC2020
             var index = line.IndexOf(":") + 2;
             var originalindex = index - 2;
             var checks = line[..originalindex].Split(" ");
-            var numbers = checks[0].Split("-");
+            var numbers = checks[0].GetNumbersFromString();
 
             _password = line[index..];
-            _min = int.Parse(numbers[0]);
-            _max = int.Parse(numbers[1]);
+            _min = numbers[0];
+            _max = numbers[1];
             _character = char.Parse(checks[1]);
         }
     }
