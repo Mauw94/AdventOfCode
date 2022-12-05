@@ -7,7 +7,7 @@ namespace AoC2022.Tests
         public void Day1()
         {
             // arrange
-            var day1 = new Day1(1);
+            var day1 = new Day1(1, 2022);
 
             // act
             var solution1 = day1.SolvePart1();
@@ -22,7 +22,7 @@ namespace AoC2022.Tests
         public void Day2()
         {
             // arrange
-            var day2 = new Day2(2);
+            var day2 = new Day2(2, 2022);
 
             // act
             var solution1 = day2.SolvePart1();
@@ -37,7 +37,7 @@ namespace AoC2022.Tests
         public void Day3()
         {
             // arrange
-            var day3 = new Day3(3);
+            var day3 = new Day3(3, 2022);
 
             // act
             var solution1 = day3.SolvePart1();
@@ -52,7 +52,7 @@ namespace AoC2022.Tests
         public void Day4()
         {
             // arrange
-            var day4 = new Day4(4);
+            var day4 = new Day4(4, 2022);
 
             // act
             var sol1 = day4.SolvePart1();
@@ -67,7 +67,7 @@ namespace AoC2022.Tests
         public void Day5()
         {
             // arrange
-            var day5 = new Day5(5);
+            var day5 = new Day5(5, 2022);
 
             // act
             var sol1 = day5.SolvePart1();

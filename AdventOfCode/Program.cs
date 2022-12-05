@@ -1,19 +1,17 @@
 ﻿using AoC.Shared;
-using AoC2022;
-
 
 List<BaseDay> days2020 = new()
 {
-    new Day1(1, 2020, false)
+    new AoC2020.Day1(1, 2020, false)
 };
 
 List<BaseDay> days2022 = new()
 {
-    new Day1(1, 2022, false),
-    new Day2(2, 2022, false),
-    new Day3(3, 2022, false),
-    new Day4(4, 2022, false),
-    new Day5(5, 2022, false),
+    new AoC2022.Day1(1, 2022, false),
+    new AoC2022.Day2(2, 2022, false),
+    new AoC2022.Day3(3, 2022, false),
+    new AoC2022.Day4(4, 2022, false),
+    new AoC2022.Day5(5, 2022, false),
 };
 
 Run(days2020, 2020);
