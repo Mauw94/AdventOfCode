@@ -78,5 +78,19 @@ namespace AoC2022.Tests
             Assert.AreEqual("MCD", sol2);
         }
 
+        [TestMethod]
+        public void Day6()
+        {
+            // arrange
+            var day6 = new Day6(6, 2022);
+
+            // act
+            var sol1 = day6.SolvePart1();
+            var sol2 = day6.SolvePart2();
+
+            // assert
+            Assert.AreEqual(11, sol1);
+            Assert.AreEqual(26, sol2);
+        }
     }
 }

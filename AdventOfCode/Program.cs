@@ -13,9 +13,10 @@ List<BaseDay> days2022 = new()
     new AoC2022.Day3(3, 2022, false),
     new AoC2022.Day4(4, 2022, false),
     new AoC2022.Day5(5, 2022, false),
+    new AoC2022.Day6(6, 2022, false),
 };
 
-Run(days2020, 2020);
+// Run(days2020, 2020);
 Run(days2022, 2022);
 
 static void Run(List<BaseDay> days, int year)
