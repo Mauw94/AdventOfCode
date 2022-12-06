@@ -21,18 +21,17 @@ namespace AoC2022
         private int FindMarker(int rangeToCheck)
         {
             var index = 0;
-            var indexAt = 0;
             var markerFound = false;
 
             while (!markerFound)
             {
-                var next = FileContent[0].Take(new Range(index, index + rangeToCheck));
-                markerFound = AllUnique(next);
-                indexAt = index;
+                markerFound = AllUnique(FileContent[0].Take(new Range(index, index + rangeToCheck)));
+                if (markerFound)
+                    break;
                 index++;
             }
 
-            return indexAt + rangeToCheck;
+            return index + rangeToCheck;
         }
 
         private bool AllUnique(IEnumerable<char> characters)
