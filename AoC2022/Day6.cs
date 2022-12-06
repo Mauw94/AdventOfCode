@@ -25,6 +25,11 @@ namespace AoC2022
 
             while (!markerFound)
             {
+                // var set = new HashSet<char>();
+                // set = FileContent[0].Take(new Range(index, index + rangeToCheck)).ToHashSet();
+                // if (set.Count == rangeToCheck)
+                //     markerFound = true;
+
                 markerFound = AllUnique(FileContent[0].Take(new Range(index, index + rangeToCheck)));
                 if (markerFound)
                     break;
