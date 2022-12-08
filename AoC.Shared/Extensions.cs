@@ -70,6 +70,9 @@ namespace AoC.Shared
             }
         }
 
+        /// <summary>
+        /// Get the product of all the factors in a list.
+        /// </summary>
         public static int Product(this IEnumerable<int> input)
         {
             var product = 1;
@@ -78,6 +81,14 @@ namespace AoC.Shared
 
             return product;
         }
+
+        /// <summary>
+        /// Parses a character that's a digit to its int notation.
+        /// </summary>
+        public static int ToInt(this char character)
+            => char.IsDigit(character)
+                ? int.Parse(character.ToString())
+                : throw new ArgumentException($"{character} is not a digit.");
 
     }
 }

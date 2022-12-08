@@ -189,7 +189,7 @@ namespace AoC2022
             {
                 for (int j = 0; j < C; j++)
                 {
-                    grid[i, j] = int.Parse(FileContent[i][j].ToString());
+                    grid[i, j] = FileContent[i][j].ToInt();
                 }
             }
 
