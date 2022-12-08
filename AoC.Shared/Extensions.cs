@@ -69,5 +69,15 @@ namespace AoC.Shared
                     .ToArray();
             }
         }
+
+        public static int Product(this IEnumerable<int> input)
+        {
+            var product = 1;
+            foreach (var i in input)
+                product *= i;
+
+            return product;
+        }
+
     }
 }

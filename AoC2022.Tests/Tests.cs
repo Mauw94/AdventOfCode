@@ -107,5 +107,20 @@ namespace AoC2022.Tests
             Assert.AreEqual(95437L, sol1);
             Assert.AreEqual(24933642L, sol2);
         }
+
+        [TestMethod]
+        public void Day8()
+        {
+            // arrange
+            var day8 = new Day8(8, 2022);
+
+            // act
+            var sol1 = day8.SolvePart1();
+            var sol2 = day8.SolvePart2();
+
+            // assert
+            Assert.AreEqual(21, sol1);
+            Assert.AreEqual(8, sol2);
+        }
     }
 }
