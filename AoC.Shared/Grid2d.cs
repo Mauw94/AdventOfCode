@@ -23,24 +23,54 @@ namespace AoC.Shared
         public Cell this[int x, int y] => Cells[new Position(x, y)];
         public Cell GetCell(Cell c) => Cells[c.Position];
 
-        public List<Cell> GetNeighbours(Cell cell)
+        public List<Cell> GetNeighbours(int row, int col)
         {
-            var currentGrid = Cells.Select(x => x.Value).ToList();
-            var neighbours = currentGrid
-                .Where(c => c.Position.x == cell.Position.x - 1
-                    || c.Position.x == cell.Position.x + 1
-                    || c.Position.y == cell.Position.y - 1
-                    || c.Position.y == cell.Position.y + 1).ToList();
+            List<Position> coords = new()
+            {
+                new Position(row - 1, col),
+                new Position(row + 1, col),
+                new Position(row, col - 1),
+                new Position(row, col + 1)
+            };
 
-            return neighbours;
+            var neighbours = coords
+                .Where(p => p.x >= 0 && p.x <= Dimensions.x
+                        && p.y >= 0 && p.y <= Dimensions.y)
+                .Select(x => x)
+                .ToList();
+
+            return Cells
+                .Where(x => neighbours.Contains(x.Key))
+                .Select(x => x.Value)
+                .ToList();
         }
 
         public void Add(Cell cell) => Cells.Add(cell.Position, cell);
 
-        public IEnumerator<Cell> GetEnumerator()
+        public IEnumerable<Cell> GetCells()
         {
             foreach (var cell in Cells.Values)
                 yield return cell;
+        }
+
+        public int CountEdges()
+        {
+            var edges = 0;
+
+            for (int r = 0; r < Dimensions.x; r++)
+            {
+                for (int c = 0; c < Dimensions.y; c++)
+                {
+                    var pos = new Position(r, c);
+                    if (Cells[pos].X == 0
+                       || Cells[pos].X == Dimensions.x - 1
+                       || Cells[pos].Y == 0
+                       || Cells[pos].Y == Dimensions.y - 1)
+                        edges++;
+                }
+            }
+
+            return edges;
         }
     }
 
