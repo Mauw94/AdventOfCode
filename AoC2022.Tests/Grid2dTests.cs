@@ -75,5 +75,21 @@ namespace AoC2022.Tests
             // assert
             Assert.AreEqual(grid.Cells.Count, cells.Count());
         }
+
+        [TestMethod]
+        public void Test_MoveUntil()
+        {
+            // arrange
+            var grid = new Grid2d(_input);
+            var from = new Position(1, 1);
+            var to = new Position(2, 1);
+            var direction = Direction.Right; // todo: define this from the from and to coords
+
+            // act
+            var moves = grid.MoveUntilPosition(from, to, direction);
+
+            // assert
+            Assert.AreEqual(1, moves);
+        }
     }
 }

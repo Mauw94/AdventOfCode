@@ -1,6 +1,6 @@
 namespace AoC.Shared
 {
-    public class Grid2d // TODO: unit test this class and implement in challenges.
+    public class Grid2d
     {
         public (int x, int y) Dimensions { get; init; }
         public Dictionary<Position, Cell> Cells { get; } = new();
@@ -22,7 +22,11 @@ namespace AoC.Shared
 
         public Cell this[int x, int y] => Cells[new Position(x, y)];
         public Cell GetCell(Cell c) => Cells[c.Position];
+        public void Add(Cell cell) => Cells.Add(cell.Position, cell);
 
+        /// <summary>
+        /// Get all the neighbouring cells of a cell.
+        /// </summary>
         public List<Cell> GetNeighbours(int row, int col)
         {
             List<Position> coords = new()
@@ -45,14 +49,15 @@ namespace AoC.Shared
                 .ToList();
         }
 
-        public void Add(Cell cell) => Cells.Add(cell.Position, cell);
-
         public IEnumerable<Cell> GetCells()
         {
             foreach (var cell in Cells.Values)
                 yield return cell;
         }
 
+        /// <summary>
+        /// Count all the edges of the grid.
+        ///  </summary
         public int CountEdges()
         {
             var edges = 0;
@@ -71,6 +76,53 @@ namespace AoC.Shared
             }
 
             return edges;
+        }
+
+        /// <summary>
+        /// Move from from position to to position.
+        /// This method can only move from left <-> right or up <-> down.
+        /// </summary>
+        public int MoveUntilPosition(Position from, Position to, Direction direction)
+        {
+            var steps = 0;
+
+            switch (direction)
+            {
+                case Direction.Down:
+                    for (int r = from.x + 1; r <= to.x; r++)
+                    {
+                        steps++;
+                        if (Cells[from].X == Cells[to].X)
+                            return steps;
+                    }
+                    break;
+                case Direction.Up:
+                    for (int r = from.x - 1; r >= to.x; r--)
+                    {
+                        steps++;
+                        if (Cells[from].X == Cells[to].X)
+                            return steps;
+                    }
+                    break;
+                case Direction.Left:
+                    for (int c = from.y - 1; c >= to.x; c--)
+                    {
+                        steps++;
+                        if (Cells[from].X == Cells[to].X)
+                            return steps;
+                    }
+                    break;
+                case Direction.Right:
+                    for (int c = from.x + 1; c <= to.x; c++)
+                    {
+                        steps++;
+                        if (Cells[from].X == Cells[to].X)
+                            return steps;
+                    }
+                    break;
+            }
+
+            return steps;
         }
     }
 
@@ -92,4 +144,11 @@ namespace AoC.Shared
     }
 
     public record Position(int x, int y);
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
 }
