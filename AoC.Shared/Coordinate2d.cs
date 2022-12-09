@@ -1,5 +1,17 @@
 namespace AoC.Shared
 {
+    public enum CompassDirection
+    {
+        N,
+        E,
+        S,
+        W,
+        NE,
+        NW,
+        SE,
+        SW
+    }
+
     public class Coordinate2d
     {
         public int X { get; set; }
@@ -25,18 +37,19 @@ namespace AoC.Shared
             return x + y;
         }
 
-        public void Move(string direction)
+        public void Move(CompassDirection dir, int steps = 1)
         {
-            if (direction == "U") Y += 1;
-            else if (direction == "D") Y -= 1;
-            else if (direction == "R") X += 1;
-            else if (direction == "L") X -= 1;
+            if (dir == CompassDirection.N) Y += steps;
+            else if (dir == CompassDirection.S) Y -= steps;
+            else if (dir == CompassDirection.E) X += steps;
+            else if (dir == CompassDirection.W) X -= steps;
+            // TODO: implement diagonal
         }
 
         public void Follow(Coordinate2d target)
         {
             if (Math.Abs(target.X - X) <= 1
-                && Math.Abs(target.Y - Y) <= 1) return;
+                && Math.Abs(target.Y - Y) <= 1) return; // touching target => don't move
 
             var stepX = target.X - X;
             var stepY = target.Y - Y;
@@ -45,9 +58,6 @@ namespace AoC.Shared
             Y += Math.Sign(stepY);
         }
 
-        public override string ToString()
-        {
-            return $"({X}, {Y})";
-        }
+        public override string ToString() => $"({X}, {Y})";
     }
 }
