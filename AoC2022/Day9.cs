@@ -13,6 +13,8 @@ namespace AoC2022
 
         public Day9(int day, int year) : base(day, year) { }
 
+        public Day9(int day, int year, string filename) : base(day, year, filename) { }
+
         public override object SolvePart1()
         {
             _segments = Enumerable.Range(0, 2).Select(_ => new Coordinate2d(0, 0)).ToArray();

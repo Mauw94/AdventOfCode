@@ -17,6 +17,12 @@
             FileContent = Common.GetInput(day, year, true);
         }
 
+        public BaseDay(int day, int year, string fileName)
+        {
+            DayNr = day;
+            FileContent = Common.GetInput(day, year, true, fileName);
+        }
+
         public abstract object SolvePart1();
 
         public abstract object SolvePart2();

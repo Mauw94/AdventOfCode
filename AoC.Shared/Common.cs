@@ -9,10 +9,15 @@ namespace AoC.Shared
         /// <summary>
         /// Read the input file (test or prod) to solve the problems with.
         /// </summary>
-        public static List<string> GetInput(int day, int year, bool isTest)
+        public static List<string> GetInput(int day, int year, bool isTest, string fn = "")
         {
             var inputPath = string.Empty;
-            var fileName = isTest ? $"day{day}_test.txt" : $"day{day}.txt";
+            var fileName = string.Empty;
+
+            if (!fn.Equals(string.Empty))
+                fileName = fn;
+            else
+                fileName = isTest ? $"day{day}_test.txt" : $"day{day}.txt";
 
             if (OperatingSystem.IsMacOS())
                 inputPath = "/Users/mauritsseelen/Documents/Projects/AdventOfCode/AoC.Shared/Input/" + year + "/";

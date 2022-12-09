@@ -29,6 +29,11 @@ namespace AoC.Shared
             Y = coord.y;
         }
 
+        public (int, int) CurrentPos() => (X, Y);
+
+        /// <summary>
+        /// Calculate manhatten distance between 2 points.
+        /// </summary>
         public int ManhattenDistance(Coordinate2d point)
         {
             int x = Math.Abs(this.X - point.X);
@@ -37,6 +42,9 @@ namespace AoC.Shared
             return x + y;
         }
 
+        /// <summary>
+        /// Move a point n steps left, right, up or down.
+        /// </summary>
         public void Move(CompassDirection dir, int steps = 1)
         {
             if (dir == CompassDirection.N) Y += steps;
@@ -46,6 +54,9 @@ namespace AoC.Shared
             // TODO: implement diagonal
         }
 
+        /// <summary>
+        /// Follow a point towards x, y for n(1) step.
+        /// </summary>
         public void Follow(Coordinate2d target)
         {
             if (Math.Abs(target.X - X) <= 1

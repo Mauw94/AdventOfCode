@@ -128,14 +128,15 @@ namespace AoC2022.Tests
         {
             // arrange
             var day9 = new Day9(9, 2022);
+            var day9p2 = new Day9(9, 2022, "day9_testp2.txt");
 
             // act
             var sol1 = day9.SolvePart1();
-            // var sol2 = day9.SolvePart2();
+            var sol2 = day9p2.SolvePart2();
 
             // assert
             Assert.AreEqual(13, sol1);
-            // Assert.AreEqual(36, sol2); input is different for part2, so skipping this
+            Assert.AreEqual(36, sol2);
         }
     }
 }
