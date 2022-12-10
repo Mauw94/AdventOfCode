@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using AoC.Shared;
 
 namespace AoC2020
@@ -9,6 +10,8 @@ namespace AoC2020
         public Day4(int day, int year, bool isTest) : base(day, year, isTest) { FillFields(); }
 
         public Day4(int day, int year) : base(day, year) { FillFields(); }
+
+        public Day4(int day, int year, string fileName) : base(day, year) { FillFields(); }
 
         public override object SolvePart1()
         {
@@ -46,7 +49,7 @@ namespace AoC2020
                     passwords.Add(password);
                     password = string.Empty;
                 }
-                password += FileContent[i];
+                password += " " + FileContent[i];
 
                 if (i == FileContent.Count - 1)
                     passwords.Add(password);
@@ -69,17 +72,23 @@ namespace AoC2020
                 if (!password.Contains(field))
                     return false;
 
-                return field switch
-                {
-                    "byr" => CheckBirthYear(password, field),
-                    "iyr" => CheckIssueYear(password, field),
-                    "eyr" => CheckExpirationYear(password, field),
-                    "hgt" => CheckHeight(password, field),
-                    
-                    _ => throw new ArgumentException()
-                };
+                if (field.Equals("byr"))
+                    if (!CheckBirthYear(password, field)) return false;
+                if (field.Equals("iyr"))
+                    if (!CheckIssueYear(password, field)) return false;
+                if (field.Equals("eyr"))
+                    if (!CheckExpirationYear(password, field)) return false;
+                if (field.Equals("hgt"))
+                    if (!CheckHeight(password, field)) return false;
+                if (field.Equals("hcl"))
+                    if (!CheckHairColor(password, field)) return false;
+                if (field.Equals("ecl"))
+                    if (!CheckEyeColor(password, field)) return false;
+                if (field.Equals("pid"))
+                    if (!CheckPasswordId(password, field)) return false;
             }
-            return false;
+
+            return true;
         }
 
         private bool CheckBirthYear(string password, string field)
@@ -111,23 +120,75 @@ namespace AoC2020
 
         private bool CheckHeight(string password, string field)
         {
-            
+            var fields = password.Split(' ');
+            var heightField = fields.First(x => x.StartsWith("hgt"));
+            var height = heightField.Split(':')[1];
+            var len = int.Parse(Regex.Match(height, @"\d+").Value);
+            var unit = height.Substring(height.Length - 2);
+
+            if (unit.Equals("cm"))
+                return len >= 150 && len <= 193;
+            if (unit.Equals("in"))
+                return len >= 59 && len <= 76;
+
+            return false;
+        }
+
+        private bool CheckHairColor(string password, string field)
+        {
+            var fields = password.Split(' ');
+            var hclField = fields.First(x => x.StartsWith("hcl"));
+            var chars = hclField.Split('#')[1];
+
+            if (chars.Length == 6
+                && chars.All(x => char.IsDigit(x) || char.IsLower(x)))
+                return true;
+            return false;
+        }
+
+        private bool CheckEyeColor(string password, string field)
+        {
+            var matches = new List<string>()
+                {
+                    "amb",
+                    "blu",
+                    "brn",
+                    "gry",
+                    "grn",
+                    "hzl",
+                    "oth"
+                };
+            var fields = password.Split(' ');
+            var eclField = fields.First(x => x.StartsWith("ecl"));
+            var color = eclField.Split(':')[1];
+
+            if (matches.Contains(color)) return true;
+            return false;
+        }
+
+        private bool CheckPasswordId(string password, string field)
+        {
+            var fields = password.Split(' ');
+            var pidField = fields.First(x => x.StartsWith("pid"));
+            var numbers = pidField.Split(':')[1];
+
+            if (numbers.All(x => char.IsDigit(x))) return true;
             return false;
         }
 
         private void FillFields()
         {
             _fields = new()
-            {
-                "byr",
-                "iyr",
-                "eyr",
-                "hgt",
-                "hcl",
-                "ecl",
-                "pid",
-                // "cid"
-            };
+                {
+                    "byr",
+                    "iyr",
+                    "eyr",
+                    "hgt",
+                    "hcl",
+                    "ecl",
+                    "pid",
+                    // "cid"
+                };
         }
     }
 }

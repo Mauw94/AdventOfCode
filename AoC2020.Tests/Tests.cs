@@ -53,13 +53,15 @@ namespace AoC2020.Tests
         {
             // arrange
             var day4 = new Day4(4, 2020);
+            var day4p2 = new Day4(4, 2020, "day4p2_test.txt");
 
             // act
             var sol1 = day4.SolvePart1();
-            var sol2 = day4.SolvePart2();
+            var sol2 = day4p2.SolvePart2();
 
             // assert
             Assert.AreEqual(2, sol1);
+            Assert.AreEqual(0, sol2);
         }
     }
 }
