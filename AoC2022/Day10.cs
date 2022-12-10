@@ -30,7 +30,7 @@ namespace AoC2022
             while (i < FileContent.Count)
             {
                 px = (cycles - 1) % 40;
-                char f = DrawPixel(x, px) ? '#' : ':';
+                string f = DrawPixel(x, px) ? "##" : "  ";
                 Console.Write(f);
 
                 if ((cycles - 20) % 40 == 0 && cycles <= 220)
