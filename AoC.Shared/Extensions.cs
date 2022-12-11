@@ -83,6 +83,18 @@ namespace AoC.Shared
         }
 
         /// <summary>
+        /// Get the product of all the factors in a list of longs.
+        /// </summary>
+        public static long LongProduct(this IEnumerable<long> input)
+        {
+            var product = 1L;
+            foreach (var i in input)
+                product *= i;
+
+            return product;
+        }
+
+        /// <summary>
         /// Parses a character that's a digit to its int notation.
         /// </summary>
         public static int ToInt(this char character)
