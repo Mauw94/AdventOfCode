@@ -1,3 +1,5 @@
+using AoC.Shared.pathfinding;
+
 namespace AoC.Shared
 {
     public class Grid2d
@@ -106,102 +108,18 @@ namespace AoC.Shared
         /// </summary>        
         public int BFS()
         {
-            var q = new Queue<(Cell, int)>();
-            var seen = new HashSet<Cell>();
-            q.Enqueue((Start, 0));
-
-            while (q.Any())
-            {
-                var (cell, cost) = q.Dequeue();
-                if (cell.X == End.X && cell.Y == End.Y) return cost;
-                if (!seen.Add(cell)) continue;
-
-                foreach (var n in GetNeighbours(cell.X, cell.Y))
-                {
-                    if (n.Value - cell.Value <= 1)
-                    {
-                        q.Enqueue((n, cost + 1));
-                    }
-                }
-            }
-
-            return 0; // 0 means no paths were found
+            var BFS = new BFS(Cells, Dimensions, Start, End);
+            return BFS.Solve();
         }
 
         /// </summary>
         /// A* search
         /// </summary>
-        public List<Cell> AStar()
+        public int SolveAStar()
         {
-            var openSet = new PriorityQueue<Cell, int>();
-            openSet.Enqueue(Start, 0);
-
-            var cameFrom = new Dictionary<Cell, Cell>();
-            var gScore = new Dictionary<Cell, int>()
-            {
-                {Start, 0}
-            };
-            var fScore = new Dictionary<Cell, int>()
-            {
-                {Start, Heuristic(Start, End)}
-            };
-
-            while (openSet.Count > 0)
-            {
-                var current = openSet.Dequeue();
-                if (current.X == End.X && current.Y == End.Y)
-                    return ReconstructPath(cameFrom, current);
-
-                foreach (var n in GetNeighbours(current.X, current.Y))
-                {
-                    var weight = EdgeWeight(current, n);
-                    if (weight == null) continue;
-
-                    var tScore = gScore[current] + weight.Value;
-                    if (!gScore.ContainsKey(n) || tScore < gScore[n])
-                    {
-                        cameFrom[n] = current;
-                        gScore[n] = tScore;
-                        fScore[n] = tScore + Heuristic(current, End);
-                        openSet.Enqueue(n, fScore[n]);
-                    }
-                }
-            }
-            return new List<Cell>();
+            var AStar = new AStar(Cells, Dimensions, Start, End);
+            return AStar.Solve();
         }
-
-        private List<Cell> ReconstructPath(Dictionary<Cell, Cell> cameFrom, Cell current)
-        {
-            var path = new List<Cell>() { current };
-            while (cameFrom.ContainsKey(current))
-            {
-                current = cameFrom[current];
-                path.Add(current);
-            }
-
-            path.Reverse();
-            return path;
-        }
-
-        private int? EdgeWeight(Cell curr, Cell neighbour)
-        {
-            var nEff = EffectiveValue(neighbour.Value);
-            var cEff = EffectiveValue(curr.Value);
-
-            return nEff > cEff + 1
-                ? null
-                : (int?)cEff - nEff + 1;
-        }
-
-        private int EffectiveValue(char c) => c switch
-        {
-            'S' => 'a',
-            'E' => 'z',
-            _ => c
-        };
-
-        private int Heuristic(Cell curr, Cell end) =>
-            Math.Abs(curr.X - end.X) + Math.Abs(curr.Y - end.Y);
 
         /// <summary>
         /// Move from from position to to position.

@@ -12,8 +12,6 @@ namespace AoC2022
 
         public override object SolvePart1()
         {
-            // https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
-
             var grid = new Grid2d(FileContent);
             var start = grid.Cells.Where(c => c.Value.Value == 'S').First();
             var end = grid.Cells.Where(c => c.Value.Value == 'E').First();
@@ -21,20 +19,20 @@ namespace AoC2022
             grid.End = end.Value;
             grid.Start.Value = 'a';
             grid.End.Value = 'z';
-            // var path = grid.AStar();
-            // return path.Count - 1;
-            return grid.BFS();
+            var path = grid.SolveAStar();
+            return path;
+            // return grid.BFS();
         }
 
         public override object SolvePart2()
         {
-            // SolveP2AStart();
-            return SolveP2BFS();
+            return SolveP2AStart();
+            // return SolveP2BFS();
         }
 
         private int SolveP2AStart()
         {
-            var paths = new List<List<Cell>>();
+            var paths = new List<int>();
             var grid = new Grid2d(FileContent);
             var possibleStarts = grid.Cells
                 .Where(c => c.Value.Value == 'a' || c.Value.Value == 'S')
@@ -48,14 +46,13 @@ namespace AoC2022
             {
                 grid.Start = start.Value;
                 grid.Start.Value = 'a';
-                var path = grid.AStar();
+                var path = grid.SolveAStar();
 
-                if (path.Count > 0)
+                if (path > 0)
                     paths.Add(path);
             }
 
-            var shortestPath = paths.MinBy(p => p.Count);
-            return shortestPath.Count - 1;
+            return paths.Min();
         }
 
         private int SolveP2BFS()
