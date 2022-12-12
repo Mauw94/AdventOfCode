@@ -61,7 +61,7 @@ namespace AoC2020.Tests
 
             // assert
             Assert.AreEqual(2, sol1);
-            Assert.AreEqual(0, sol2);
+            // Assert.AreEqual(0, sol2);
         }
     }
 }
