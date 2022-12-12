@@ -1,4 +1,5 @@
 using AoC.Shared;
+using static AoC.Shared.Grid2d;
 
 namespace AoC2022.Tests
 {

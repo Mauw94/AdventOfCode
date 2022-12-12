@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.RegularExpressions;
+using static AoC.Shared.Grid2d;
 
 namespace AoC.Shared
 {
@@ -102,5 +103,10 @@ namespace AoC.Shared
                 ? int.Parse(character.ToString())
                 : throw new ArgumentException($"{character} is not a digit.");
 
+        /// <summary>
+        /// Convert char to its ascii value.
+        /// </summary.
+        public static int CharToAscii(this char character)
+            => Convert.ToInt32(character);
     }
 }
