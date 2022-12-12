@@ -105,27 +105,24 @@ namespace AoC.Shared
         public int BFS()
         {
             var q = new Queue<Cell>();
-            var seen = new HashSet<(int, int)>();
+            var seen = new HashSet<Cell>();
             q.Enqueue(Start);
 
             while (q.Any())
             {
                 var cell = q.Dequeue();
-                if (cell.Value == 'E')
-                {
-                    return seen.Count;
-                }
-                if (!seen.Add((cell.X, cell.Y))) continue;
+                if (cell.X == End.X && cell.Y == End.Y) return seen.Count;
+                if (!seen.Add(cell)) continue;
 
                 foreach (var n in GetNeighbours(cell.X, cell.Y))
                 {
-                    if (EdgeWeight(cell, n) != null
-                        && EdgeWeight(cell, n) <= 1)
+                    if (cell.Value - n.Value >= -1)
                     {
                         q.Enqueue(n);
                     }
                 }
             }
+
             return 0;
         }
 
