@@ -106,19 +106,19 @@ namespace AoC.Shared
         /// <summary>
         /// Breadth-first search.
         /// </summary>        
-        public int BFS()
+        public int BFS(bool p1)
         {
             var BFS = new BFS(Cells, Dimensions, Start, End);
-            return BFS.Solve();
+            return p1 ? BFS.Solve() : BFS.SolveReverse();
         }
 
         /// </summary>
         /// A* search
         /// </summary>
-        public int SolveAStar()
+        public int SolveAStar(bool p1)
         {
             var AStar = new AStar(Cells, Dimensions, Start, End);
-            return AStar.Solve();
+            return p1 ? AStar.Solve() : AStar.SolveReverse();
         }
 
         /// <summary>

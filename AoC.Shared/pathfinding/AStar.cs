@@ -33,16 +33,56 @@ namespace AoC.Shared.pathfinding
 
                 foreach (var n in GetNeighbours(current.X, current.Y))
                 {
-                    var weight = EdgeWeight(current, n);
-                    if (weight == null) continue;
-
-                    var tScore = gScore[current] + weight.Value;
-                    if (!gScore.ContainsKey(n) || tScore < gScore[n])
+                    if (n.Value - current.Value <= 1)
                     {
-                        cameFrom[n] = current;
-                        gScore[n] = tScore;
-                        fScore[n] = tScore + Heuristic(current, End);
-                        openSet.Enqueue(n, fScore[n]);
+                        var tScore = gScore[current] + 1;
+                        if (!gScore.ContainsKey(n) || tScore < gScore[n])
+                        {
+                            cameFrom[n] = current;
+                            gScore[n] = tScore;
+                            fScore[n] = tScore + Heuristic(current, End);
+                            openSet.Enqueue(n, fScore[n]);
+                        }
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        public int SolveReverse()
+        {
+            var openSet = new PriorityQueue<Cell, int>();
+            openSet.Enqueue(End, 0);
+
+            var cameFrom = new Dictionary<Cell, Cell>();
+            var gScore = new Dictionary<Cell, int>()
+            {
+                {End, 0}
+            };
+            var fScore = new Dictionary<Cell, int>()
+            {
+                {End, Heuristic(End, Start)}
+            };
+
+            while (openSet.Count > 0)
+            {
+                var current = openSet.Dequeue();
+                if (current.Value == 'a')
+                    return ReconstructPath(cameFrom, current);
+
+                foreach (var n in GetNeighbours(current.X, current.Y))
+                {
+                    if (n.Value - current.Value >= -1)
+                    {
+                        var tScore = gScore[current] + 1;
+                        if (!gScore.ContainsKey(n) || tScore < gScore[n])
+                        {
+                            cameFrom[n] = current;
+                            gScore[n] = tScore;
+                            fScore[n] = tScore + Heuristic(End, current);
+                            openSet.Enqueue(n, fScore[n]);
+                        }
                     }
                 }
             }
@@ -62,23 +102,6 @@ namespace AoC.Shared.pathfinding
             path.Reverse();
             return path.Count - 1;
         }
-
-        private int? EdgeWeight(Cell curr, Cell neighbour)
-        {
-            var nEff = EffectiveValue(neighbour.Value);
-            var cEff = EffectiveValue(curr.Value);
-
-            return nEff > cEff + 1
-                ? null
-                : (int?)cEff - nEff + 1;
-        }
-
-        private int EffectiveValue(char c) => c switch
-        {
-            'S' => 'a',
-            'E' => 'z',
-            _ => c
-        };
 
         private int Heuristic(Cell curr, Cell end) =>
             Math.Abs(curr.X - end.X) + Math.Abs(curr.Y - end.Y);

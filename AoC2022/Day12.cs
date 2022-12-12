@@ -19,64 +19,44 @@ namespace AoC2022
             grid.End = end.Value;
             grid.Start.Value = 'a';
             grid.End.Value = 'z';
-            var path = grid.SolveAStar();
-            return path;
-            // return grid.BFS();
+
+            return grid.SolveAStar(true);
+            //return grid.BFS(true);
         }
 
         public override object SolvePart2()
         {
-            return SolveP2AStart();
-            // return SolveP2BFS();
+            return SolveP2AStart(false);
+            //return SolveP2BFS(false);
         }
 
-        private int SolveP2AStart()
+        private int SolveP2AStart(bool p1)
+        {
+            var grid = new Grid2d(FileContent);
+            grid.End = grid.Cells.Where(c => c.Value.Value == 'E').First().Value;
+            grid.End.Value = 'z';
+            grid.Start = grid.Cells.Where(c => c.Value.Value == 'a').First().Value;
+            grid.Start.Value = 'a';
+
+            var path = grid.SolveAStar(p1);
+
+            return path;
+        }
+
+        private int SolveP2BFS(bool p1)
         {
             var paths = new List<int>();
             var grid = new Grid2d(FileContent);
-            var possibleStarts = grid.Cells
-                .Where(c => c.Value.Value == 'a' || c.Value.Value == 'S')
-                .Where(c => grid.GetNeighbours(c.Value.X, c.Value.Y).Any(n => n.Value == 'b'))
-                .ToList();
-
-            grid.End = grid.Cells.Where(c => c.Value.Value == 'E').First().Value;
+            var start = grid.Cells.Where(c => c.Value.Value == 'S').First();
+            var end = grid.Cells.Where(c => c.Value.Value == 'E').First();
+            grid.Start = start.Value;
+            grid.End = end.Value;
+            grid.Start.Value = 'a';
             grid.End.Value = 'z';
 
-            foreach (var start in possibleStarts)
-            {
-                grid.Start = start.Value;
-                grid.Start.Value = 'a';
-                var path = grid.SolveAStar();
+            var path = grid.BFS(p1);
 
-                if (path > 0)
-                    paths.Add(path);
-            }
-
-            return paths.Min();
-        }
-
-        private int SolveP2BFS()
-        {
-            var paths = new List<int>();
-            var grid = new Grid2d(FileContent);
-            var possibleStarts = grid.Cells
-                .Where(c => c.Value.Value == 'a' || c.Value.Value == 'S')
-                .Where(c => grid.GetNeighbours(c.Value.X, c.Value.Y).Any(n => n.Value == 'b'))
-                .ToList();
-
-            grid.End = grid.Cells.Where(c => c.Value.Value == 'E').First().Value;
-            grid.End.Value = 'z';
-
-            foreach (var start in possibleStarts)
-            {
-                grid.Start = start.Value;
-                grid.Start.Value = 'a';
-                var path = grid.BFS();
-
-                paths.Add(path);
-            }
-
-            return paths.Min();
+            return path;
         }
     }
 }
