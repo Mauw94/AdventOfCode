@@ -101,31 +101,36 @@ namespace AoC.Shared
             return edges;
         }
 
-        // todo: not working correctly
+        /// <summary>
+        /// Breadth-first search.
+        /// </summary>        
         public int BFS()
         {
-            var q = new Queue<Cell>();
+            var q = new Queue<(Cell, int)>();
             var seen = new HashSet<Cell>();
-            q.Enqueue(Start);
+            q.Enqueue((Start, 0));
 
             while (q.Any())
             {
-                var cell = q.Dequeue();
-                if (cell.X == End.X && cell.Y == End.Y) return seen.Count;
+                var (cell, cost) = q.Dequeue();
+                if (cell.X == End.X && cell.Y == End.Y) return cost;
                 if (!seen.Add(cell)) continue;
 
                 foreach (var n in GetNeighbours(cell.X, cell.Y))
                 {
-                    if (cell.Value - n.Value >= -1)
+                    if (n.Value - cell.Value <= 1)
                     {
-                        q.Enqueue(n);
+                        q.Enqueue((n, cost + 1));
                     }
                 }
             }
 
-            return 0;
+            return 0; // 0 means no paths were found
         }
 
+        /// </summary>
+        /// A* search
+        /// </summary>
         public List<Cell> AStar()
         {
             var openSet = new PriorityQueue<Cell, int>();
