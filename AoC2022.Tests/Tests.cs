@@ -209,7 +209,7 @@ namespace AoC2022.Tests
 
             // assert
             Assert.AreEqual(24, sol1);
-            // Assert.AreEqual(140, sol2);
+            Assert.AreEqual(93, sol2);
         }
     }
 }
