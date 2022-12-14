@@ -10,18 +10,20 @@ List<BaseDay> days2020 = new()
 
 List<BaseDay> days2022 = new()
 {
-    new AoC2022.Day1(1, 2022, false),
-    new AoC2022.Day2(2, 2022, false),
-    new AoC2022.Day3(3, 2022, false),
-    new AoC2022.Day4(4, 2022, false),
-    new AoC2022.Day5(5, 2022, false),
-    new AoC2022.Day6(6, 2022, false),
-    new AoC2022.Day7(7, 2022, false),
-    new AoC2022.Day8(8, 2022, false),
-    new AoC2022.Day9(9, 2022, false),
-    new AoC2022.Day10(10, 2022, false),
-    new AoC2022.Day11(11, 2022, false),
-    new AoC2022.Day12(12, 2022, false),
+    // new AoC2022.Day1(1, 2022, false),
+    // new AoC2022.Day2(2, 2022, false),
+    // new AoC2022.Day3(3, 2022, false),
+    // new AoC2022.Day4(4, 2022, false),
+    // new AoC2022.Day5(5, 2022, false),
+    // new AoC2022.Day6(6, 2022, false),
+    // new AoC2022.Day7(7, 2022, false),
+    // new AoC2022.Day8(8, 2022, false),
+    // new AoC2022.Day9(9, 2022, false),
+    // new AoC2022.Day10(10, 2022, false),
+    // new AoC2022.Day11(11, 2022, false),
+    // new AoC2022.Day12(12, 2022, false),
+    // new AoC2022.Day13(13, 2022, false),
+    new AoC2022.Day14(14, 2022, false),
 };
 
 // Run(days2020, 2020);
