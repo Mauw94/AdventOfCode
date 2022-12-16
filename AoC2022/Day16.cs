@@ -15,11 +15,13 @@ namespace AoC2022
         public string Name { get; set; }
         public int FlowRate { get; set; }
         public List<string> LeadsTo { get; set; } = new();
+        public int Minutes { get; set; } = 30;
+        public Dictionary<string, int> Paths { get; set; } = new();
     }
 
     public class Day16 : BaseDay
     {
-        private List<Valve> _valves = new();
+        private Dictionary<string, Valve> _valves = new();
 
         public Day16(int day, int year, bool isTest) : base(day, year, isTest) { }
 
@@ -27,17 +29,34 @@ namespace AoC2022
 
         public override object SolvePart1()
         {
-            Parse();
+            Setup();
+            var valvesToUse = _valves.Values.Where(v => v.FlowRate > 0).ToList();
+            var max = CalculateReleasedPressure(30, valvesToUse, "AA");
 
-            var root = _valves.First(v => v.Name == "AA");
-            var pressure = OpenValves(root);
-
-            return pressure;
+            return max;
         }
 
         public override object SolvePart2()
         {
-            return 1;
+            Setup();
+            var valvesTouse = _valves.Values.Where(v => v.FlowRate > 0).ToList();
+            var max = CalculateReleasePressureWithElephant(new int[] { 26, 26 }, valvesTouse, new string[] { "AA", "AA" });
+
+            return max;
+        }
+
+        private void Setup()
+        {
+            _valves = new();
+            Parse();
+
+            foreach (var v in _valves.Values)
+            {
+                var target = v.Name;
+                var cur = _valves[target];
+                cur.Paths[target] = 0;
+                CalculatePathsPerValve(cur, target);
+            }
         }
 
         private void Parse()
@@ -56,55 +75,81 @@ namespace AoC2022
                     .Select(x => x.Trim());
 
                 valve.LeadsTo.AddRange(l);
-                _valves.Add(valve);
+                _valves[valve.Name] = valve;
             }
         }
 
-        private int OpenValves(Valve root)
+        private void CalculatePathsPerValve(Valve current, string target)
         {
-            var queue = new Queue<(Valve v, int p)>();
-            var opened = new HashSet<Valve>();
-            var minutes = 30;
-            var pressure = 0;
+            var visited = new HashSet<string>();
 
-            queue.Enqueue((root, 0));
-
-            while (queue.Any())
+            while (current != null && visited.Count < _valves.Count)
             {
-                var cur = queue.Dequeue();
-                --minutes;
-                var options = new List<Valve>();
-
-                foreach (var option in cur.v.LeadsTo)
+                visited.Add(current.Name);
+                var distance = current.Paths[target] + 1;
+                foreach (var option in current.LeadsTo)
                 {
-                    var valve = _valves.First(v => v.Name.Equals(option))!;
-                    if (valve == null) continue;
-                    if (opened.Contains(valve))
-                        continue;
-                    else
-                        options.Add(valve);
+                    if (!visited.Contains(option))
+                    {
+                        var cur = _valves[option];
+                        if (cur.Paths.ContainsKey(target))
+                        {
+                            if (distance < cur.Paths[target])
+                                cur.Paths[target] = distance;
+                        }
+                        else
+                            cur.Paths[target] = distance;
+                    }
                 }
 
-                if (options.Count == 0)
+                current = _valves.Values
+                    .Where(c => !visited.Contains(c.Name)
+                            && c.Paths.ContainsKey(target))
+                    .OrderBy(c => c.Paths[target])
+                    .FirstOrDefault()!;
+            }
+        }
+
+        private long CalculateReleasedPressure(int time, List<Valve> valvesToUse, string current)
+        {
+            var max = 0L;
+            var cur = _valves[current];
+
+            foreach (var valve in valvesToUse)
+            {
+                var timeLeft = time - cur.Paths[valve.Name] - 1;
+                if (timeLeft > 0)
                 {
-                    // it ends here?
-                    break;
+                    var pressureReleased = timeLeft * valve.FlowRate
+                        + CalculateReleasedPressure(timeLeft, valvesToUse.Where(v => v.Name != valve.Name).ToList(), valve.Name);
+                    if (pressureReleased > max) max = pressureReleased;
                 }
-
-
-// keep track of minutes for each option
-// explore each option and suboption within
-// keep track of max pressure
-
-                var valveToOpen = options.Where(o => o.FlowRate == options.Max(x => x.FlowRate)).First();
-                opened.Add(valveToOpen);
-                --minutes;
-                var pressureReleased = minutes * valveToOpen.FlowRate;
-                pressure += pressureReleased;
-                queue.Enqueue((valveToOpen, pressureReleased));
             }
 
-            return pressure;
+            return max;
+        }
+
+        private long CalculateReleasePressureWithElephant(int[] time, List<Valve> valvesToUse, string[] current)
+        {
+            var max = 0L;
+            var act = time[0] > time[1] ? 0 : 1;
+            var cur = _valves[current[act]];
+
+            foreach (var valve in valvesToUse)
+            {
+                var timeLeft = time[act] - cur.Paths[valve.Name] - 1;
+                if (timeLeft > 0)
+                {
+                    var times = new int[] { timeLeft, time[1 - act] };
+                    var currentValves = new string[] { valve.Name, current[1 - act] };
+                    var pressureReleased = timeLeft * valve.FlowRate
+                        + CalculateReleasePressureWithElephant(times, valvesToUse.Where(v => v.Name != valve.Name).ToList(), currentValves);
+
+                    if (pressureReleased > max) max = pressureReleased;
+                }
+            }
+
+            return max;
         }
     }
 }

@@ -235,11 +235,11 @@ namespace AoC2022.Tests
 
             // act
             var sol1 = day.SolvePart1();
-            // var sol2 = day.SolvePart2();
+            var sol2 = day.SolvePart2();
 
             // assert
-            // Assert.AreEqual(26, sol1);
-            // Assert.AreEqual(56000011, sol2);
+            Assert.AreEqual(1651L, sol1);
+            Assert.AreEqual(1707L, sol2);
         }
     }
 }
