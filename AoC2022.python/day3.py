@@ -31,21 +31,21 @@
 #     else:
 #         t += ord(k) - ord("A") + 27
 
-# s = 0
+s = 0
 
-# for line in open('input/day3.txt'):
-#     l = len(line) // 2
-#     a = line[:l]
-#     b = line[l:]
+for line in open('input/day3.txt'):
+    l = len(line) // 2
+    a = line[:l]
+    b = line[l:]
 
-#     k, = set(a) & set(b)
-#     if k > 'a':
-#         s += ord(k) - ord('a') + 1
-#     else:
-#         s += ord(k) - ord('A') + 27
+    k, = set(a) & set(b)
+    if k > 'a':
+        s += ord(k) - ord('a') + 1
+    else:
+        s += ord(k) - ord('A') + 27
 
 
-# print(s)
+print(s)
 
 s = 0
 c = 0

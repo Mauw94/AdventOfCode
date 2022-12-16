@@ -24,7 +24,8 @@ List<BaseDay> days2022 = new()
     // new AoC2022.Day12(12, 2022, false),
     // new AoC2022.Day13(13, 2022, false),
     // new AoC2022.Day14(14, 2022, false),
-    new AoC2022.Day15(15, 2022, false),
+    // new AoC2022.Day15(15, 2022, false),
+    new AoC2022.Day16(16, 2022, false),
 };
 
 // Run(days2020, 2020);
