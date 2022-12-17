@@ -253,8 +253,8 @@ namespace AoC2022.Tests
             var sol2 = day.SolvePart2();
 
             // assert
-            Assert.AreEqual(1651L, sol1);
-            Assert.AreEqual(1707L, sol2);
+            Assert.AreEqual(3068L, sol1);
+            Assert.AreEqual(1514285714288L, sol2);
         }
     }
 }
