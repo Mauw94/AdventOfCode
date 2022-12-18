@@ -5,6 +5,13 @@ namespace AoC2022
     public class Grid3D
     {
         public HashSet<(int x, int y, int z)> Cells { get; set; }
+        // I tried hashing a Cell object here before which did not work -> obv
+        // an object hash doesn't care about its mutable properties
+        // the hash will always be the same, even if the properties change
+        // so that approach failed
+        // also tried List<Cell> objects -> which did work with some added ContainsCell method
+        // in the Grid3D class, but was terribly slow compared to a HashSet of tuple(int, int, int)
+        // the difference between the two was about 30 seconds
 
         public int MaxX => Cells.Select(c => c.x).Max();
         public int MinX => Cells.Select(c => c.x).Min();
