@@ -242,7 +242,7 @@ namespace AoC2022.Tests
             Assert.AreEqual(1707L, sol2);
         }
 
-         [TestMethod]
+        [TestMethod]
         public void Day17()
         {
             // arrange
@@ -255,6 +255,21 @@ namespace AoC2022.Tests
             // assert
             Assert.AreEqual(3068L, sol1);
             Assert.AreEqual(1514285714288L, sol2);
+        }
+
+        [TestMethod]
+        public void Day18()
+        {
+            // arrange
+            var day = new Day18(18, 2022);
+
+            // act
+            var sol1 = day.SolvePart1();
+            var sol2 = day.SolvePart2();
+
+            // assert
+            Assert.AreEqual(64, sol1);
+            Assert.AreEqual(58, sol2);
         }
     }
 }
