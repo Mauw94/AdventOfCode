@@ -4,44 +4,23 @@ namespace AoC2022
 {
     public class Grid3D
     {
-        public List<Cell> Cells { get; set; } = new();
+        public HashSet<(int x, int y, int z)> Cells { get; set; }
 
-        public int MaxX => Cells.Select(c => c.X).Max();
-        public int MinX => Cells.Select(c => c.X).Min();
-        public int MaxY => Cells.Select(c => c.Y).Max();
-        public int MinY => Cells.Select(c => c.Y).Min();
-        public int MaxZ => Cells.Select(c => c.Z).Max();
-        public int MinZ => Cells.Select(c => c.Z).Min();
+        public int MaxX => Cells.Select(c => c.x).Max();
+        public int MinX => Cells.Select(c => c.x).Min();
+        public int MaxY => Cells.Select(c => c.y).Max();
+        public int MinY => Cells.Select(c => c.y).Min();
+        public int MaxZ => Cells.Select(c => c.z).Max();
+        public int MinZ => Cells.Select(c => c.z).Min();
 
-        public bool ContainsCell(int x, int y, int z)
+        public Grid3D()
         {
-            var cell = Cells.Where(c => c.X == x && c.Y == y && c.Z == z).FirstOrDefault();
-            return cell != null ? true : false;
+            Cells = new();
         }
 
-        public List<(int x, int y, int z)> Neigbours = new()
-        {
-            new (1, 0, 0),
-            new (- 1, 0, 0),
-            new (0, 1, 0),
-            new (0, - 1, 0),
-            new (0, 0, 1),
-            new (0, 0, - 1)
-        };
-    }
+        private List<(int, int, int)> _neighbors = new List<(int x, int y, int z)> { (1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1) };
 
-    public class Cell
-    {
-        public Cell(int x, int y, int z)
-        {
-            X = x;
-            Y = y;
-            Z = z;
-        }
-
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Z { get; set; }
+        public List<(int x, int y, int z)> Neigbours => _neighbors;
     }
 
     public class Day18 : BaseDay
@@ -63,7 +42,7 @@ namespace AoC2022
             {
                 foreach (var (dx, dy, dz) in _grid.Neigbours)
                 {
-                    if (!_grid.ContainsCell(cell.X + dx, cell.Y + dy, cell.Z + dz))
+                    if (!_grid.Cells.Contains((cell.x + dx, cell.y + dy, cell.z + dz)))
                         surface++;
                 }
             }
@@ -74,7 +53,6 @@ namespace AoC2022
         public override object SolvePart2() // flood fill
         {
             _grid = ParseGrid();
-
             var surface = 0;
             var rangeX = Enumerable.Range(_grid.MinX, _grid.MaxX + 1).ToList();
             var rangeY = Enumerable.Range(_grid.MinY, _grid.MaxY + 1).ToList();
@@ -83,7 +61,7 @@ namespace AoC2022
             foreach (var cell in _grid.Cells)
             {
                 foreach (var (dx, dy, dz) in _grid.Neigbours)
-                    if (NotInDroplet((cell.X + dx, cell.Y + dy, cell.Z + dz), rangeX, rangeY, rangeZ))
+                    if (NotInDroplet((cell.x + dx, cell.y + dy, cell.z + dz), rangeX, rangeY, rangeZ))
                         surface++;
             }
 
@@ -93,7 +71,7 @@ namespace AoC2022
 
         private bool NotInDroplet((int x, int y, int z) cell, List<int> rangeX, List<int> rangeY, List<int> rangeZ)
         {
-            if (_grid.ContainsCell(cell.x, cell.y, cell.z)) return false;
+            if (_grid.Cells.Contains((cell.x, cell.y, cell.z))) return false;
 
             var checkedCells = new HashSet<(int x, int y, int z)>();
             var queue = new Queue<(int x, int y, int z)>();
@@ -109,7 +87,7 @@ namespace AoC2022
                 if (!rangeX.Contains(c.x) || !rangeY.Contains(c.y) || !rangeZ.Contains(c.z))
                     return true; // check if it's outside the droplets ranges
 
-                if (!_grid.ContainsCell(c.x, c.y, c.z))
+                if (!_grid.Cells.Contains(c))
                 {
                     foreach (var (dx, dy, dz) in _grid.Neigbours)
                     {
@@ -123,12 +101,10 @@ namespace AoC2022
         private Grid3D ParseGrid()
         {
             var grid = new Grid3D();
-            var cells = new List<Cell>();
             foreach (var line in FileContent)
             {
                 var coords = line.Split(',').Select(x => int.Parse(x)).ToArray();
-                var cell = new Cell(coords[0], coords[1], coords[2]);
-                grid.Cells.Add(cell);
+                grid.Cells.Add((coords[0], coords[1], coords[2]));
             }
 
             return grid;
