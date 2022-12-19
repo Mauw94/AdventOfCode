@@ -62,7 +62,7 @@ namespace AoC2022
                 if (checkedCells.Contains(c)) continue;
                 checkedCells.Add(c);
 
-                if (!_grid.RangeX().Contains(c.x) || !_grid.RangeY().Contains(c.y) || !_grid.RangeZ().Contains(c.z))
+                if (!_grid.RangeX.Contains(c.x) || !_grid.RangeY.Contains(c.y) || !_grid.RangeZ.Contains(c.z))
                     return true; // check if it's outside the droplets ranges
 
                 if (!_grid.Cells.Contains(c))
