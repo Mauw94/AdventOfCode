@@ -4,12 +4,12 @@ graph = {}
 for x in data:
     fr, to = x.split("-")
     if fr not in graph:
-        graph[fr] = []
+        graph[fr] = set()
     if to not in graph:
-        graph[to] = []
+        graph[to] = set()
 
-    graph[to].append(fr)
-    graph[fr].append(to)
+    graph[to].add(fr)
+    graph[fr].add(to)
 
 
 def dfs(node: str, visited: list, paths: list):
@@ -30,6 +30,8 @@ def is_small(node: str):
 
 
 # print(graph)
+
+# p1
 paths = []
 dfs("start", [], paths)
 print(len(paths))
