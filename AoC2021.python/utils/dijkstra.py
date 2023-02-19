@@ -6,10 +6,10 @@ class Dijkstra:
     width = 0
     height = 0
 
-    def __init__(self, data):
-        self.create_grid(data)
-        self.width = len(data)
-        self.height = len(data[0])
+    def __init__(self, grid, width, height):
+        self.grid = grid
+        self.width = width
+        self.height = height
 
     def distance_start_to_end(self, start, end):
         distances = {node: float('inf') for node in self.grid}
@@ -35,14 +35,6 @@ class Dijkstra:
                 if distance < distances[n]:
                     distances[n] = distance
                     heapq.heappush(queue, (distance, n))
-
-    def create_grid(self, data):
-        self.width = len(data)
-        self.height = len(data[0])
-
-        for i, line in enumerate(data):
-            for j, d in enumerate(line.strip()):
-                self.grid[(i, j)] = int(d)
 
     def neighbours(self, x, y):
         n = []
