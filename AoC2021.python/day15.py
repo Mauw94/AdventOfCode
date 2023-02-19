@@ -17,5 +17,8 @@ end = (len(data) - 1, len(data[0]) - 1)
 
 dijkstra = Dijkstra(grid, width, height)
 distance = dijkstra.distance_start_to_end(start, end)
+distances = dijkstra.return_distances(start)
 
 print(distance)
+
+print(distances)
