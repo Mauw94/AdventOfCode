@@ -1,7 +1,7 @@
 import time
 from utils.expand_grid import GridExpander
 from utils.dijkstra import Dijkstra
-from utils.AStart import AStar
+from utils.AStar import AStar
 
 
 data = open('input/day15_test.txt').read().splitlines()
