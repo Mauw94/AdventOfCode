@@ -13,22 +13,19 @@ class Dijkstra:
 
     # returns shortest path (distance) from start -> end
     def distance_start_to_end(self, start, end):
-        i = 0
         distances = {node: float('inf') for node in self.grid}
         distances[start] = 0
         visited = set()
         queue = [(0, start)]
 
         while queue:
-            i += 1
             cur_distance, cur_node = heapq.heappop(queue)
 
             if cur_node in visited:
                 continue
 
             if cur_node == end:
-                return distances[cur_node], i
-
+                return distances[cur_node]
             if cur_distance > distances[cur_node]:
                 continue
 
