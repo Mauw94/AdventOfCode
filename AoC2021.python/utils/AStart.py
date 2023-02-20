@@ -1,4 +1,5 @@
 from queue import PriorityQueue
+import heapq
 
 
 class AStar:
@@ -13,37 +14,42 @@ class AStar:
         self.height = height
 
     def solve(self, start, end):
-        frontier = PriorityQueue()
-        frontier.put(start, 0)
-        came_from = {}
-        cost_so_far = {}
-        came_from[start] = None
-        cost_so_far[start] = 0
+        open_queue = []
+        closed_queue = set()
+        g_score = {}
+        i = 0
+        for y in range(self.height):
+            for x in range(self.width):
+                g_score[(y, x)] = float('inf')
 
-        while not frontier.empty():
-            current = frontier.get()
+        g_score[start] = 0
+        heapq.heappush(open_queue, (self.__heuristic(start, end), start))
 
-            if current == end:
-                break
+        while open_queue:
+            i += 1
+            _, node = heapq.heappop(open_queue)
 
-            for next_node in self.__neighbours(current[0], current[1]):
-                new_cost = cost_so_far[current] + self.grid[next_node]
-                if next_node not in cost_so_far or new_cost < cost_so_far[next_node]:
-                    cost_so_far[next_node] = new_cost
-                    priority = new_cost + self.__heuristic(end, next_node)
-                    frontier.put(next_node, priority)
-                    came_from[next_node] = current
+            if node == end:
+                return g_score[node], i
 
-        # path = []
-        # current = end
-        # while current != start:
-        #     path.append(current)
-        #     current = came_from[current]
-        # path.append(start)
-        # path.reverse()
+            elif node in closed_queue:
+                continue
+            else:
+                neighbours = self.__neighbours(node[0], node[1])
 
-        # return path
-        return cost_so_far[end]
+                for neighbour in neighbours:
+                    if neighbour in closed_queue:
+                        continue
+                    added_g_score = self.grid[neighbour]
+
+                    candiate_g = g_score[node] + added_g_score
+
+                    if candiate_g <= g_score[neighbour]:
+                        g_score[neighbour] = candiate_g
+                        f = self.__heuristic(neighbour, end) + candiate_g
+                        heapq.heappush(open_queue, (f, neighbour))
+
+                closed_queue.add(node)
 
     def __neighbours(self, x, y):
         n = []
@@ -60,4 +66,4 @@ class AStar:
     def __heuristic(self, a, b):
         (x1, y1) = a
         (x2, y2) = b
-        return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+        return abs(x1 - x2) + abs(y1 - y2)
