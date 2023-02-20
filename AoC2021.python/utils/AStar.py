@@ -1,4 +1,3 @@
-from queue import PriorityQueue
 import heapq
 
 
@@ -18,11 +17,9 @@ class AStar:
         closed_queue = set()
         g_score = {}
         g_score[start] = 0
-
         heapq.heappush(open_queue, (self.__heuristic(start, end), start))
 
         while open_queue:
-
             _, node = heapq.heappop(open_queue)
 
             if node == end:
@@ -43,7 +40,7 @@ class AStar:
 
                 g_score[neighbour] = tentative_g
 
-        # return g_score[node], i
+        return None
 
     def __neighbours(self, x, y):
         n = []
