@@ -33,15 +33,15 @@ class AStar:
                 if neighbour in closed_queue:
                     continue
 
-                candiate_g = g_score[node] + self.grid[neighbour]
+                tentative_g = g_score[node] + self.grid[neighbour]
 
                 if neighbour not in g_score:
-                    f = self.__heuristic(neighbour, end) + candiate_g
+                    f = self.__heuristic(neighbour, end) + tentative_g
                     heapq.heappush(open_queue, (f, neighbour))
-                elif candiate_g >= g_score[neighbour]:
+                elif tentative_g >= g_score[neighbour]:
                     continue
 
-                g_score[neighbour] = candiate_g
+                g_score[neighbour] = tentative_g
 
         # return g_score[node], i
 
