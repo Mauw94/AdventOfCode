@@ -53,7 +53,7 @@ if type != 4:
 
     if length_type == 0:
         sub_packets = bits[8:8+14]
-        print(int(sub_packets, 2)) # is 27
+        print(int(sub_packets, 2))  # is 27
         # get next 11 and 16 bits -> they're the subpackets
         # how to determine the 11 and 16??
         # => the next bits contain a new packet (literal or operator) -> do recursize stuff
@@ -77,8 +77,36 @@ else:
     packet = LiteralPacktet(version, int(literal_value, 2), bits_count)
     packets.append(packet)
 
-# print(packet.size())
-# print(packets)
+
+def parse_packet(bits):
+    version = int(bits[0:3], 2)
+    type = int(bits[3:6], 2)
+    if type != 4:
+        length_type = int(bits[6:7], 2)
+        print(length_type)
+
+        if length_type == 0:
+            sub_packets = bits[8:8+14]
+            print(int(sub_packets, 2))  # is 27
+        else:
+            print(11)
+    else:
+        literal_bits = []
+        bits_count = 0
+        last = False
+        s = 6
+        while not last:
+            b = bits[s:s+5]
+            if b[0] == "0":
+                last = True
+            literal_bits.append(b[1:])
+            bits_count += 5
+            s += 5
+
+        literal_value = "".join(literal_bits)
+        packet = LiteralPacktet(version, int(literal_value, 2), bits_count)
+        packets.append(packet)
+
 
 # test
 packet = OperatorPacket(5)
