@@ -78,12 +78,12 @@ else:
     packets.append(packet)
 
 # print(packet.size())
-print(packets)
+# print(packets)
 
 # test
 packet = OperatorPacket(5)
+packets.append(packet)
 
 t = 0
-for p in packets:
-    t += p.size()
-print(t)
+t = sum(p.size() for p in packets)
+print("total size: ", t)

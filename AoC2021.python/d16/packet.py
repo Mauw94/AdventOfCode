@@ -4,7 +4,6 @@ class Packet:
     
     def __init__(self, version):
         self.version = version
-        print(self.version)
     
     def size():
         pass
