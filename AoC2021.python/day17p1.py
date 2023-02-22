@@ -41,7 +41,7 @@ dy = y_range[0]
 h = 0
 hits = 0
 
-for i in range(100000):
+for i in range(100_000):
     (hit, highest) = shoot(dx, dy)
 
     if hit:
@@ -54,5 +54,5 @@ for i in range(100000):
         dx = 1
         dy += 1
 
-print(highest)
+print(h)
 print(hits)
