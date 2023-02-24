@@ -1,5 +1,5 @@
 passwords = open('input/day4.txt').read().split("\n\n")
-fields = [
+keys = [
     "byr",
     "iyr",
     "eyr",
@@ -8,5 +8,7 @@ fields = [
     "ecl",
     "pid"
 ]
-valid = 0
 
+valid_keys = sum([all([k in p for k in keys]) for p in passwords])
+
+print(valid_keys)
